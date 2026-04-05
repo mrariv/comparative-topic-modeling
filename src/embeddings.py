@@ -1,4 +1,4 @@
-from config import EMBEDDINGS_DIR, RANDOM_SEED, BATCH_SIZE, OPENAI_MODEL, SBERT_MODEL
+from config import BATCH_SIZE, OPENAI_MODEL, SBERT_MODEL
 from dotenv import load_dotenv
 from openai import OpenAI
 import os
