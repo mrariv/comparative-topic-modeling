@@ -1,16 +1,14 @@
-# Python
+data/
+embeddings/
+.env
+*.npy
+*.parquet
+__pycache__/
+.ipynb_checkpoints/
+*.pyc# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 venv/
 .env
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Data
-data/raw/
-data/processed/
-outputs/
-
