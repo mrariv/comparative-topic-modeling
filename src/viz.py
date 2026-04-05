@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from umap import UMAP
-from config import RANDOM_SEED
+from src.config import RANDOM_SEED
 
 def plot_topic_sizes(topics, title):
     s = pd.Series(topics)

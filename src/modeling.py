@@ -5,7 +5,7 @@ from umap import UMAP
 from sklearn.feature_extraction.text import CountVectorizer
 from gensim.corpora import Dictionary
 from gensim.models import LdaModel
-from config import LDA_N_TOPICS, HDBSCAN_MIN_CLUSTER_SIZE, RANDOM_SEED
+from src.config import LDA_N_TOPICS, HDBSCAN_MIN_CLUSTER_SIZE, RANDOM_SEED
 
 def safe_split(x):
     x = "" if x is None else str(x)
@@ -28,7 +28,10 @@ def fit_lda(texts, dictionary, corpus):
 
     return model
 
-def fit_bertopic(docs, embeddings):
+def fit_bertopic(docs, embeddings, min_df=5, max_df=0.7, min_cluster_size=None):
+    if min_cluster_size is None:
+        min_cluster_size = HDBSCAN_MIN_CLUSTER_SIZE
+    
     umap_model = UMAP(
         n_neighbors=15,
         n_components=5,
@@ -37,8 +40,8 @@ def fit_bertopic(docs, embeddings):
     )
 
     hdbscan_model = HDBSCAN(
-        min_cluster_size=HDBSCAN_MIN_CLUSTER_SIZE,
-        min_samples=max(5, HDBSCAN_MIN_CLUSTER_SIZE // 3),
+        min_cluster_size=min_cluster_size,
+        min_samples=max(5, min_cluster_size // 3),
         metric="euclidean",
         cluster_selection_method="eom",
         prediction_data=True
@@ -49,8 +52,8 @@ def fit_bertopic(docs, embeddings):
         preprocessor=None,
         token_pattern=None,
         lowercase=True,
-        min_df=5,
-        max_df=0.7,
+        min_df=min_df,
+        max_df=max_df,
         ngram_range=(1, 2)
     )
 

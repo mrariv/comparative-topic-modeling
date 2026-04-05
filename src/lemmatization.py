@@ -1,7 +1,7 @@
 import re
 from razdel import tokenize
+import pymorphy2
 from stop_words import get_stop_words
-import spacy
 import pandas as pd
 import os
 
@@ -35,18 +35,21 @@ def lemmatize_texts(texts, output_path=None, checkpoint_every=1000):
         start = 0
 
     remaining_texts = texts.iloc[start:]
+
+    if len(remaining_texts) == 0:
+        print(f"Already complete: {len(results)} documents")
+        return results
+    
     remaining_texts = remaining_texts.apply(clean_text)
     remaining_texts = remaining_texts.apply(tokenize_text)
     remaining_texts = remaining_texts.apply(remove_stopwords)
     remaining_texts = remaining_texts.apply(lambda x: " ".join(x))
 
-    spacy.prefer_gpu()
-    nlp = spacy.load("ru_core_news_sm", disable=["ner", "parser"])
+    morph = pymorphy2.MorphAnalyzer()
 
-    print("Using GPU:", spacy.prefer_gpu())
-
-    for i, doc in enumerate(nlp.pipe(remaining_texts, batch_size=1000)):
-        lemmas = [token.lemma_.lower() for token in doc if token.is_alpha]
+    for i, text in enumerate(remaining_texts):
+        tokens = text.split()
+        lemmas = [morph.parse(token)[0].normal_form for token in tokens]
         results.append(" ".join(lemmas))
 
         if output_path and (i + 1) % checkpoint_every == 0:
@@ -55,6 +58,6 @@ def lemmatize_texts(texts, output_path=None, checkpoint_every=1000):
     
     if output_path:
         pd.DataFrame({"processed_text": results}).to_csv(output_path, index=False)
-        print(f"Completed: {start + i + 1} documents stored in {output_path}")
+        print(f"Completed: {len(results)} documents stored in {output_path}")
 
     return results

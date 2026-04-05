@@ -1,7 +1,7 @@
 data/
 embeddings/
 lemmatized/
-.env
+test_pipeline.py
 *.npy
 *.parquet
 __pycache__/

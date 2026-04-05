@@ -1,4 +1,4 @@
-from config import BATCH_SIZE, OPENAI_MODEL, SBERT_MODEL
+from src.config import BATCH_SIZE, OPENAI_MODEL, SBERT_MODEL
 from dotenv import load_dotenv
 from openai import OpenAI
 import os
@@ -49,6 +49,10 @@ def generate_openai_embeddings(df, output_path):
 
 
 def generate_sbert_embeddings(df, output_path):
+    if os.path.exists(output_path):
+        print(f"SBERT embeddings already exist at {output_path}, loading...")
+        return np.load(output_path)
+    
     model = SentenceTransformer(SBERT_MODEL)
     texts = df['text_for_llm'].tolist()
     embeddings = model.encode(

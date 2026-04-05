@@ -1,4 +1,4 @@
-from config import DATA_PATH, MAX_CHARS
+from src.config import DATA_PATH, MAX_CHARS
 import pandas as pd
 
 def load_corpus(path=DATA_PATH):
