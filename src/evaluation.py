@@ -28,4 +28,5 @@ def compute_lda_diversity(lda, top_k=10):
     topics = lda.show_topics(num_topics=lda.num_topics, num_words=top_k, formatted=False)
     top_words = [[w for w, _ in words] for _, words in topics]
     all_words = [w for t in top_words for w in t]
+    
     return len(set(all_words)) / len(all_words)

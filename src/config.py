@@ -1,6 +1,7 @@
 # src/config.py
 DATA_PATH = "data/lenta_socioeconomic_corpus.csv"
 EMBEDDINGS_DIR = "embeddings/"
+LEMMATIZATION_DIR = "lemmatized/"
 OUTPUTS_DIR = "outputs/"
 
 # Model settings

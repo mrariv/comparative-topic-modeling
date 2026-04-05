@@ -29,7 +29,6 @@ def fit_lda(texts, dictionary, corpus):
     return model
 
 def fit_bertopic(docs, embeddings):
-
     umap_model = UMAP(
         n_neighbors=15,
         n_components=5,

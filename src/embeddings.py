@@ -43,7 +43,9 @@ def generate_openai_embeddings(df, output_path):
             np.save(output_path, np.array(embeddings, dtype=np.float32))
             print(f"Done: {len(embeddings)} OpenAI embeddings saved to {output_path}")
 
-    return True
+    np.save(output_path, np.array(embeddings, dtype=np.float32))
+    print(f"Done: {len(embeddings)} OpenAI embeddings saved to {output_path}")
+    return np.array(embeddings, dtype=np.float32)
 
 
 def generate_sbert_embeddings(df, output_path):
@@ -61,4 +63,4 @@ def generate_sbert_embeddings(df, output_path):
     np.save(output_path, embeddings)
     print(f"Done: {len(embeddings)} SBERT embeddings saved to {output_path}")
 
-    return True
+    return np.array(embeddings, dtype=np.float32)
