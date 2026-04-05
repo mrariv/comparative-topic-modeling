@@ -39,7 +39,7 @@ def fit_bertopic(docs, embeddings):
 
     hdbscan_model = HDBSCAN(
         min_cluster_size=HDBSCAN_MIN_CLUSTER_SIZE,
-        min_samples=max(5, HDBSCAN_MIN_CLUSTER_SIZE // 3)
+        min_samples=max(5, HDBSCAN_MIN_CLUSTER_SIZE // 3),
         metric="euclidean",
         cluster_selection_method="eom",
         prediction_data=True
