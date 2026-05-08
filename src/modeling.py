@@ -11,8 +11,7 @@ def safe_split(x):
     x = "" if x is None else str(x)
     return [t for t in x.split() if len(t) >= 2]
 
-def fit_lda(texts, dictionary, corpus):
-    num_topics = LDA_N_TOPICS
+def fit_lda(texts, dictionary, corpus, num_topics=LDA_N_TOPICS):
     model = LdaModel(
         corpus=corpus,
         id2word=dictionary,

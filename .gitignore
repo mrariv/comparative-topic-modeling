@@ -2,6 +2,7 @@ data/
 embeddings/
 lemmatized/
 test_pipeline.py
+fix_openai_embeddings.py
 *.npy
 *.parquet
 __pycache__/

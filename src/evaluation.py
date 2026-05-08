@@ -1,4 +1,5 @@
 from gensim.models import CoherenceModel
+import random
 
 def compute_coherence(topics_words, tokens_list, dictionary):
     cm = CoherenceModel(
@@ -30,3 +31,25 @@ def compute_lda_diversity(lda, top_k=10):
     all_words = [w for t in top_words for w in t]
     
     return len(set(all_words)) / len(all_words)
+
+def save_word_intrusion_stimuli(topics_words, model_name, n_topics=10, topn=5):
+    selected = [t for t in topics_words[:15] if len(set(t)) >= 5][:n_topics]
+    stimuli = []
+
+    for i, topic_words in enumerate(selected):
+        other_topics = [t for j, t in enumerate(selected) if j != i]
+        intruder_pool = [w for t in other_topics for w in t[:3]]
+        intruder = random.choice([w for w in intruder_pool if w not in topic_words])
+
+        clean_words = list(dict.fromkeys(topic_words[:topn]))[:5]
+        words = clean_words + [intruder]
+        random.shuffle(words)
+
+        stimuli.append({
+            "model": model_name,
+            "topic_id": i,
+            "words": words,
+            "intruder": intruder
+        })
+    
+    return stimuli
